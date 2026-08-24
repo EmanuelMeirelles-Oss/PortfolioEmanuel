@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import yamileImg from '../assets/projects/yamile.png';
-import idateImg from '../assets/projects/idate.png';
-import imeppiImg from '../assets/projects/imeppi.png';
-import confibanImg from '../assets/projects/confiban.png';
-import zonamistaImg from '../assets/projects/zonamista.png';
+import yamileImg from '../assets/projects/yamile.webp';
+import idateImg from '../assets/projects/idate.webp';
+import imeppiImg from '../assets/projects/imeppi.webp';
+import confibanImg from '../assets/projects/confiban.webp';
+import zonamistaImg from '../assets/projects/zonamista.webp';
 import { ExternalLink } from 'lucide-react';
 
 const realProjects = [
@@ -109,7 +109,10 @@ export const MarqueeSection: React.FC = () => {
               <img
                 src={project.image}
                 alt={project.title}
+                width={1200}
+                height={750}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 interface FadeInProps {
@@ -20,7 +20,9 @@ export const FadeIn: React.FC<FadeInProps> = ({
   className = '',
   as = 'div'
 }) => {
-  const Component = motion.create(as as any);
+  // Memoized so the underlying element type stays stable across
+  // re-renders — recreating it every render would remount the subtree.
+  const Component = useMemo(() => motion.create(as as any), [as]);
 
   return (
     <Component

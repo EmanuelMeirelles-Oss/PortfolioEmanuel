@@ -3,7 +3,7 @@ import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
 import { Code2, Sparkles } from 'lucide-react';
-import emanuelAvatar from '../assets/emanuel_no_bg.png';
+import emanuelAvatar from '../assets/emanuel_no_bg.webp';
 import WarpText from './WarpText';
 
 interface HeroSectionProps {
@@ -19,18 +19,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
   };
 
   return (
-    <section className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#0C0C0C] select-none pt-4 pb-8 md:pb-12">
+    <section className="relative min-h-screen min-h-dvh w-full flex flex-col justify-between overflow-hidden bg-[#0C0C0C] select-none pt-4 pb-8 md:pb-12">
       {/* Navbar */}
       <FadeIn delay={0} y={-20} className="w-full z-30 relative">
-        <nav className="w-full flex items-center justify-between px-6 md:px-12 pt-4 md:pt-6 text-[#D7E2EA] font-semibold uppercase tracking-wider text-xs sm:text-sm md:text-base lg:text-lg">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-extrabold text-white tracking-widest text-sm md:text-xl">
+        <nav className="w-full flex items-center justify-between gap-2 px-4 sm:px-6 md:px-12 pt-4 md:pt-6 text-[#D7E2EA] font-semibold uppercase tracking-normal sm:tracking-wider text-[10px] sm:text-sm md:text-base lg:text-lg">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 shrink-0 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-extrabold text-white tracking-tight sm:tracking-widest text-[11px] sm:text-sm md:text-xl whitespace-nowrap">
               EMANUEL MEIRELLES
             </span>
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-8 font-medium">
+          <div className="flex items-center gap-2.5 sm:gap-8 font-medium shrink-0">
             <button
               onClick={() => scrollToSection('about')}
               className="hover:text-white transition-colors duration-200 cursor-pointer bg-transparent border-none text-inherit font-inherit"
@@ -96,6 +96,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
+                width={832}
+                height={960}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] transition-transform duration-500 group-hover:scale-105"
               />
 

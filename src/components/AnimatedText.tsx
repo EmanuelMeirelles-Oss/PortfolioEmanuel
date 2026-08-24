@@ -33,21 +33,49 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className = ''
     offset: ['start 0.8', 'end 0.2']
   });
 
-  const characters = text.split('');
-  const totalChars = characters.length;
+  const totalChars = text.length;
+  const words = text.split(' ');
+
+  // Precompute each word's starting offset in the full string (including
+  // the space that follows) so the per-character reveal timing stays
+  // identical to a flat character-by-character split.
+  const wordStartIndices = words.reduce<number[]>((acc, _word, i) => {
+    const previous = i === 0 ? 0 : acc[i - 1] + words[i - 1].length + 1;
+    acc.push(previous);
+    return acc;
+  }, []);
 
   return (
     <p ref={containerRef} className={`flex flex-wrap ${className}`}>
-      {characters.map((char, i) => {
-        const start = i / totalChars;
-        const end = start + 1 / totalChars;
+      {words.map((word, wordIndex) => {
+        const wordStartIndex = wordStartIndices[wordIndex];
+
         return (
-          <Character
-            key={i}
-            char={char}
-            progress={scrollYProgress}
-            range={[start, end]}
-          />
+          <span key={wordIndex} className="inline-flex whitespace-nowrap">
+            {word.split('').map((char, i) => {
+              const idx = wordStartIndex + i;
+              const start = idx / totalChars;
+              const end = start + 1 / totalChars;
+              return (
+                <Character
+                  key={i}
+                  char={char}
+                  progress={scrollYProgress}
+                  range={[start, end]}
+                />
+              );
+            })}
+            {wordIndex < words.length - 1 && (
+              <Character
+                char=" "
+                progress={scrollYProgress}
+                range={[
+                  (wordStartIndex + word.length) / totalChars,
+                  (wordStartIndex + word.length + 1) / totalChars,
+                ]}
+              />
+            )}
+          </span>
         );
       })}
     </p>

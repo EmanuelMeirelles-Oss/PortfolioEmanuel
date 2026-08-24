@@ -4,11 +4,11 @@ import { LiveProjectButton } from './LiveProjectButton';
 import { ContactButton } from './ContactButton';
 import { ExternalLink, Layers, CheckCircle } from 'lucide-react';
 
-import yamileImg from '../assets/projects/yamile.png';
-import idateImg from '../assets/projects/idate.png';
-import imeppiImg from '../assets/projects/imeppi.png';
-import confibanImg from '../assets/projects/confiban.png';
-import zonamistaImg from '../assets/projects/zonamista.png';
+import yamileImg from '../assets/projects/yamile.webp';
+import idateImg from '../assets/projects/idate.webp';
+import imeppiImg from '../assets/projects/imeppi.webp';
+import confibanImg from '../assets/projects/confiban.webp';
+import zonamistaImg from '../assets/projects/zonamista.webp';
 
 interface ProjectsSectionProps {
   onOpenContact: () => void;
@@ -81,7 +81,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
   return (
     <section
       id="projects"
-      className="relative min-h-screen w-full bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 py-24 sm:py-32 px-5 sm:px-8 md:px-12 flex flex-col justify-center items-center overflow-hidden z-30"
+      className="relative min-h-screen min-h-dvh w-full bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 py-24 sm:py-32 px-5 sm:px-8 md:px-12 flex flex-col justify-center items-center overflow-hidden z-30"
     >
       <div className="relative z-10 max-w-6xl w-full mx-auto">
         {/* Header */}
@@ -138,8 +138,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
                       <img
                         src={project.image}
                         alt={project.title}
+                        width={1200}
+                        height={750}
                         className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity" />
 

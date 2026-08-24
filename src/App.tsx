@@ -27,7 +27,7 @@ function App() {
       sparkCount={8}
       duration={400}
     >
-      <div className="min-h-screen bg-[#0C0C0C] text-[#D7E2EA] font-sans overflow-x-hidden selection:bg-[#B600A8]/30 selection:text-white">
+      <div className="min-h-screen min-h-dvh bg-[#0C0C0C] text-[#D7E2EA] font-sans overflow-x-hidden selection:bg-[#B600A8]/30 selection:text-white">
         {/* Hero Section */}
         <HeroSection onOpenContact={handleOpenContact} />
 

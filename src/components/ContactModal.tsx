@@ -36,7 +36,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg rounded-3xl border border-[#D7E2EA]/20 bg-[#12141A] p-6 sm:p-8 text-[#D7E2EA] shadow-2xl z-10"
+            className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-3xl border border-[#D7E2EA]/20 bg-[#12141A] p-6 sm:p-8 text-[#D7E2EA] shadow-2xl z-10"
           >
             <button
               onClick={onClose}

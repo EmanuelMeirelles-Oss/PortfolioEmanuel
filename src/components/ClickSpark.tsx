@@ -39,7 +39,7 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
 
     const resizeCanvas = () => {
       const rect = container.getBoundingClientRect();
@@ -67,6 +67,12 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
           distance: sparkRadius * (0.8 + Math.random() * 0.4),
           startTime: now,
         });
+      }
+
+      // The render loop only runs while sparks are animating; kick it
+      // back off here instead of redrawing an empty canvas forever.
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(render);
       }
     };
 
@@ -104,13 +110,15 @@ export const ClickSpark: React.FC<ClickSparkProps> = ({
         ctx.restore();
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      if (sparks.length > 0) {
+        animationFrameId = requestAnimationFrame(render);
+      } else {
+        animationFrameId = 0;
+      }
     };
 
-    animationFrameId = requestAnimationFrame(render);
-
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       container.removeEventListener('click', handleClick);
       resizeObserver.disconnect();
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface WarpTextProps {
   text: string;
@@ -46,7 +46,26 @@ export const WarpText: React.FC<WarpTextProps> = ({
     targetY: 0,
   });
 
+  // Touch devices, small screens and "reduce motion" users get a plain
+  // CSS gradient heading instead of the animated canvas: the mesh warp
+  // has no meaningful pointer interaction on touch, its fixed-size canvas
+  // clips long text on narrow viewports, and re-drawing a large cell grid
+  // every frame forever was the main source of jank on mobile.
+  const [useStaticFallback, setUseStaticFallback] = useState(true);
+
   useEffect(() => {
+    const mq = window.matchMedia(
+      '(max-width: 767px), (pointer: coarse), (prefers-reduced-motion: reduce)'
+    );
+    const update = () => setUseStaticFallback(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (useStaticFallback) return;
+
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -54,11 +73,14 @@ export const WarpText: React.FC<WarpTextProps> = ({
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let time = 0;
+    let fittedFontSize = fontSize;
 
     const offscreenCanvas = document.createElement('canvas');
     const offscreenCtx = offscreenCanvas.getContext('2d', { alpha: true });
+    const computedFontFamily =
+      fontFamily === 'inherit' ? "'Kanit', sans-serif" : fontFamily;
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
@@ -71,6 +93,18 @@ export const WarpText: React.FC<WarpTextProps> = ({
 
       offscreenCanvas.width = canvas.width;
       offscreenCanvas.height = canvas.height;
+
+      // Shrink the font until the text fits the container so it never
+      // gets clipped by the canvas edges on narrower viewports.
+      fittedFontSize = fontSize;
+      if (offscreenCtx && rect.width > 0) {
+        offscreenCtx.font = `${fontWeight} ${fittedFontSize}px ${computedFontFamily}`;
+        const maxWidth = rect.width * 0.96;
+        const measured = offscreenCtx.measureText(text).width;
+        if (measured > maxWidth && measured > 0) {
+          fittedFontSize = Math.max(24, fittedFontSize * (maxWidth / measured));
+        }
+      }
     };
 
     resize();
@@ -114,9 +148,7 @@ export const WarpText: React.FC<WarpTextProps> = ({
         offscreenCtx.scale(dpr, dpr);
         offscreenCtx.clearRect(0, 0, w, h);
 
-        const computedFontFamily =
-          fontFamily === 'inherit' ? "'Kanit', sans-serif" : fontFamily;
-        offscreenCtx.font = `${fontWeight} ${fontSize}px ${computedFontFamily}`;
+        offscreenCtx.font = `${fontWeight} ${fittedFontSize}px ${computedFontFamily}`;
         offscreenCtx.textAlign = 'center';
         offscreenCtx.textBaseline = 'middle';
 
@@ -134,8 +166,10 @@ export const WarpText: React.FC<WarpTextProps> = ({
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
-      const gridRows = 40;
-      const gridCols = 70;
+      // Grid resolution kept low enough to stay smooth on mid-range
+      // hardware: this ran at 40x70 (2800 drawImage calls/frame) before.
+      const gridRows = 22;
+      const gridCols = 38;
       const cellW = w / gridCols;
       const cellH = h / gridRows;
 
@@ -200,15 +234,30 @@ export const WarpText: React.FC<WarpTextProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    // Pause the render loop entirely while the headline is scrolled out
+    // of view instead of burning a full canvas redraw every frame forever.
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!animationFrameId) animationFrameId = requestAnimationFrame(render);
+        } else if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = 0;
+        }
+      },
+      { threshold: 0 }
+    );
+    intersectionObserver.observe(container);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
     };
   }, [
+    useStaticFallback,
     text,
     color,
     warpStrength,
@@ -224,6 +273,28 @@ export const WarpText: React.FC<WarpTextProps> = ({
     letterSpacing,
     lineHeight,
   ]);
+
+  if (useStaticFallback) {
+    return (
+      <div
+        style={{ width: '100%', ...style }}
+        className={`flex items-center justify-center overflow-hidden ${className}`}
+      >
+        <span
+          className="hero-heading block w-full text-center"
+          style={{
+            fontFamily,
+            fontWeight,
+            letterSpacing: `${letterSpacing}em`,
+            lineHeight,
+            fontSize: 'clamp(2.75rem, 15vw, 5.5rem)',
+          }}
+        >
+          {text}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div
