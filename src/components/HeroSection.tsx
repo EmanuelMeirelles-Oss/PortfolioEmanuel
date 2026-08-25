@@ -2,7 +2,6 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
-import { Code2, Sparkles } from 'lucide-react';
 import emanuelAvatar from '../assets/emanuel_no_bg.webp';
 import WarpText from './WarpText';
 
@@ -102,16 +101,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
                 decoding="async"
                 className="w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] transition-transform duration-500 group-hover:scale-105"
               />
-
-              <div className="absolute top-[15%] -left-6 sm:-left-10 bg-[#12141A]/95 border border-white/10 backdrop-blur-md px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-white tracking-wide">
-                <Code2 className="w-4 h-4 text-blue-400 shrink-0" />
-                <span>Sites Sob Medida</span>
-              </div>
-
-              <div className="absolute bottom-[20%] -right-6 sm:-right-10 bg-[#12141A]/95 border border-white/10 backdrop-blur-md px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-white tracking-wide">
-                <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Alta Conversão</span>
-              </div>
             </div>
           </Magnet>
         </FadeIn>
