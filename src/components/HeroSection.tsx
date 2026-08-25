@@ -68,7 +68,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             style={{
               fontFamily: "'Kanit', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(3rem, 12vw, 110px)',
+              fontSize: 'clamp(2.75rem, 11vw, 105px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
             }}
@@ -79,16 +79,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-20 my-auto py-4 sm:py-6 flex justify-center items-center pointer-events-auto">
+      <div className="relative z-20 my-auto pt-2 pb-6 sm:pt-4 sm:pb-8 flex justify-center items-center pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
-            padding={160}
-            strength={3.5}
-            activeTransition="transform 0.25s ease-out"
-            inactiveTransition="transform 0.6s ease-in-out"
+            padding={450}
+            strength={1.6}
+            activeTransition="transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)"
+            inactiveTransition="transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)"
             className="relative flex justify-center items-center"
           >
-            <div className="relative group max-w-[260px] sm:max-w-[340px] md:max-w-[420px] lg:max-w-[480px]">
+            <div className="relative group max-w-[240px] sm:max-w-[310px] md:max-w-[370px] lg:max-w-[420px]">
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
