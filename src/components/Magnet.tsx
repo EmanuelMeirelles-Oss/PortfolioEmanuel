@@ -11,18 +11,14 @@ interface MagnetProps {
 
 export const Magnet: React.FC<MagnetProps> = ({
   children,
-  padding = 150,
-  strength = 3,
-  activeTransition = 'transform 0.3s ease-out',
-  inactiveTransition = 'transform 0.6s ease-in-out',
+  padding = 180,
+  strength = 3.5,
+  activeTransition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+  inactiveTransition = 'transform 0.5s ease-out',
   className = ''
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Pointer position is applied straight to the DOM node's transform
-  // instead of going through React state: the old version called
-  // setState on every mousemove pixel, re-rendering this whole subtree
-  // 60+ times per second. A rAF-throttled ref update is effectively free.
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -53,7 +49,13 @@ export const Magnet: React.FC<MagnetProps> = ({
           isActive = true;
           el.style.transition = activeTransition;
         }
-        el.style.transform = `translate3d(${distX / strength}px, ${distY / strength}px, 0)`;
+        // Move horizontally and downward/laterally, but clamp upward movement to 0
+        // so the top of the character avatar NEVER moves up into the text region!
+        const moveX = distX / strength;
+        const rawMoveY = distY / strength;
+        const moveY = Math.max(0, rawMoveY);
+
+        el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
       } else if (isActive) {
         isActive = false;
         el.style.transition = inactiveTransition;
@@ -66,7 +68,7 @@ export const Magnet: React.FC<MagnetProps> = ({
       if (!rafId) rafId = requestAnimationFrame(apply);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (rafId) cancelAnimationFrame(rafId);

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useSpring } from "motion/react";
+import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 type Variant =
@@ -64,53 +63,57 @@ export function ShimmerText({
   children,
   className,
   variant = "default",
-  duration = 2.5,
-  delay = 1.0,
   interactive = true,
   style,
 }: ShimmerTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Gentle, calm spring lerp
-  const mouseXSpring = useSpring(50, { stiffness: 45, damping: 22 });
-  const [bgPos, setBgPos] = useState("50%");
-  const [isMouseActive, setIsMouseActive] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!interactive) return;
 
+    let targetPos = 50;
+    let currentPos = 50;
+    let rafId = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setIsMouseActive(true);
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
-        mouseXSpring.set(Math.min(Math.max(relativeX, -30), 130));
+        targetPos = Math.min(Math.max(relativeX, -20), 120);
       } else {
-        const globalX = (e.clientX / window.innerWidth) * 100;
-        mouseXSpring.set(globalX);
+        targetPos = (e.clientX / window.innerWidth) * 100;
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [interactive, mouseXSpring]);
+    const update = () => {
+      // Smooth lerp without React re-renders for max performance
+      currentPos += (targetPos - currentPos) * 0.08;
+      if (textRef.current) {
+        const mapped = -80 + (currentPos / 100) * 310;
+        textRef.current.style.backgroundPositionX = `${mapped}%`;
+      }
+      rafId = requestAnimationFrame(update);
+    };
 
-  useEffect(() => {
-    if (!interactive) return;
-    const unsubscribe = mouseXSpring.on("change", (val) => {
-      const mappedPos = -80 + (val / 100) * 310;
-      setBgPos(`${mappedPos}%`);
-    });
-    return () => unsubscribe();
-  }, [interactive, mouseXSpring]);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    rafId = requestAnimationFrame(update);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [interactive]);
 
   return (
     <div ref={containerRef} className="group overflow-hidden inline-block" style={style}>
       <div>
-        <motion.div
+        <div
+          ref={textRef}
           className={cn(
-            "inline-block [--shimmer-contrast:rgba(255,255,255,1)]",
+            "inline-block",
             variantMap[variant],
-            className,
+            className
           )}
           style={
             {
@@ -120,39 +123,14 @@ export function ShimmerText({
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "75% 200%",
-              backgroundPositionX: isMouseActive ? bgPos : undefined,
-              filter: "drop-shadow(0 2px 10px rgba(255,255,255,0.08))",
+              backgroundSize: "70% 200%",
+              backgroundPositionX: "50%",
+              willChange: "background-position",
             } as React.CSSProperties
-          }
-          initial={
-            isMouseActive
-              ? undefined
-              : {
-                  backgroundPositionX: "250%",
-                }
-          }
-          animate={
-            isMouseActive
-              ? undefined
-              : {
-                  backgroundPositionX: ["-100%", "250%"],
-                }
-          }
-          transition={
-            isMouseActive
-              ? undefined
-              : {
-                  duration: duration,
-                  delay: delay,
-                  repeat: Infinity,
-                  repeatDelay: 2.0,
-                  ease: "easeInOut",
-                }
           }
         >
           <span>{children}</span>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

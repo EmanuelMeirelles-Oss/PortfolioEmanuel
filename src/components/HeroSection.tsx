@@ -59,11 +59,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </FadeIn>
 
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-20 relative px-2 text-center flex justify-center items-center pointer-events-none">
+      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-30 relative px-2 text-center flex justify-center items-center pointer-events-none">
         <FadeIn delay={0.15} y={30} className="w-full">
           <ShimmerText
             interactive
-            duration={2.5}
             className="font-extrabold uppercase tracking-tight text-center leading-none whitespace-nowrap block w-full"
             style={{
               fontFamily: "'Kanit', sans-serif",
@@ -80,13 +79,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-10 my-auto py-2 sm:py-4 flex justify-center items-center pointer-events-auto">
+      <div className="relative z-10 my-auto pt-4 sm:pt-6 pb-2 flex justify-center items-center pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
-            padding={180}
-            strength={3.5}
-            activeTransition="transform 0.3s ease-out"
-            inactiveTransition="transform 0.7s ease-in-out"
+            padding={200}
+            strength={3.2}
+            activeTransition="transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)"
+            inactiveTransition="transform 0.5s ease-out"
             className="relative flex justify-center items-center"
           >
             <div className="relative group max-w-[220px] sm:max-w-[290px] md:max-w-[360px] lg:max-w-[420px]">
