@@ -64,13 +64,14 @@ export function ShimmerText({
   children,
   className,
   variant = "default",
-  duration = 1.5,
-  delay = 1.5,
+  duration = 2.5,
+  delay = 1.0,
   interactive = true,
   style,
 }: ShimmerTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mouseXSpring = useSpring(50, { stiffness: 100, damping: 20 });
+  // Gentle, calm spring lerp
+  const mouseXSpring = useSpring(50, { stiffness: 45, damping: 22 });
   const [bgPos, setBgPos] = useState("50%");
   const [isMouseActive, setIsMouseActive] = useState(false);
 
@@ -82,7 +83,7 @@ export function ShimmerText({
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
-        mouseXSpring.set(Math.min(Math.max(relativeX, -40), 140));
+        mouseXSpring.set(Math.min(Math.max(relativeX, -30), 130));
       } else {
         const globalX = (e.clientX / window.innerWidth) * 100;
         mouseXSpring.set(globalX);
@@ -96,7 +97,7 @@ export function ShimmerText({
   useEffect(() => {
     if (!interactive) return;
     const unsubscribe = mouseXSpring.on("change", (val) => {
-      const mappedPos = -100 + (val / 100) * 350;
+      const mappedPos = -80 + (val / 100) * 310;
       setBgPos(`${mappedPos}%`);
     });
     return () => unsubscribe();
@@ -107,7 +108,7 @@ export function ShimmerText({
       <div>
         <motion.div
           className={cn(
-            "inline-block [--shimmer-contrast:rgba(255,255,255,0.95)] dark:[--shimmer-contrast:rgba(255,255,255,0.9)]",
+            "inline-block [--shimmer-contrast:rgba(255,255,255,1)]",
             variantMap[variant],
             className,
           )}
@@ -115,12 +116,13 @@ export function ShimmerText({
             {
               WebkitTextFillColor: "transparent",
               background:
-                "linear-gradient(to right, #646973 0%, #BBCCD7 30%, var(--shimmer-contrast) 50%, #BBCCD7 70%, #646973 100%)",
+                "linear-gradient(to right, #808A98 0%, #C4D2DE 28%, #FFFFFF 50%, #C4D2DE 72%, #808A98 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "60% 200%",
+              backgroundSize: "75% 200%",
               backgroundPositionX: isMouseActive ? bgPos : undefined,
+              filter: "drop-shadow(0 2px 10px rgba(255,255,255,0.08))",
             } as React.CSSProperties
           }
           initial={
@@ -144,8 +146,8 @@ export function ShimmerText({
                   duration: duration,
                   delay: delay,
                   repeat: Infinity,
-                  repeatDelay: 1.5,
-                  ease: "linear",
+                  repeatDelay: 2.0,
+                  ease: "easeInOut",
                 }
           }
         >

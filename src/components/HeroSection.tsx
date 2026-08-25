@@ -59,16 +59,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </FadeIn>
 
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-10 px-2 text-center flex justify-center items-center">
+      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-20 relative px-2 text-center flex justify-center items-center pointer-events-none">
         <FadeIn delay={0.15} y={30} className="w-full">
           <ShimmerText
             interactive
-            duration={1.5}
+            duration={2.5}
             className="font-extrabold uppercase tracking-tight text-center leading-none whitespace-nowrap block w-full"
             style={{
               fontFamily: "'Kanit', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(2.8rem, 13.5vw, 130px)',
+              fontSize: 'clamp(2.8rem, 13vw, 125px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
               width: '100%',
@@ -80,16 +80,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-20 my-auto -mt-10 sm:-mt-14 md:-mt-18 py-2 flex justify-center items-center pointer-events-auto">
+      <div className="relative z-10 my-auto py-2 sm:py-4 flex justify-center items-center pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
-            padding={350}
-            strength={2.2}
-            activeTransition="transform 0.25s ease-out"
-            inactiveTransition="transform 0.6s ease-in-out"
+            padding={180}
+            strength={3.5}
+            activeTransition="transform 0.3s ease-out"
+            inactiveTransition="transform 0.7s ease-in-out"
             className="relative flex justify-center items-center"
           >
-            <div className="relative group max-w-[240px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[460px]">
+            <div className="relative group max-w-[220px] sm:max-w-[290px] md:max-w-[360px] lg:max-w-[420px]">
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
