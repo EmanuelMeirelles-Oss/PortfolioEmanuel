@@ -59,18 +59,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </FadeIn>
 
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-2 sm:mt-4 z-10 px-2 text-center flex justify-center items-center shrink-0">
-        <FadeIn delay={0.15} y={30}>
+      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-10 px-2 text-center flex justify-center items-center">
+        <FadeIn delay={0.15} y={30} className="w-full">
           <ShimmerText
             interactive
             duration={1.5}
-            className="font-extrabold uppercase tracking-tight text-center leading-none"
+            className="font-extrabold uppercase tracking-tight text-center leading-none whitespace-nowrap block w-full"
             style={{
               fontFamily: "'Kanit', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(2.5rem, 9.5vw, 95px)',
+              fontSize: 'clamp(2.8rem, 13.5vw, 130px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
+              width: '100%',
             }}
           >
             EU CRIO SITES
@@ -79,16 +80,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-20 flex-1 flex justify-center items-center pt-2 sm:pt-4 pb-4 sm:pb-6 pointer-events-auto">
+      <div className="relative z-20 my-auto -mt-10 sm:-mt-14 md:-mt-18 py-2 flex justify-center items-center pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
-            padding={550}
-            strength={1.4}
-            activeTransition="transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)"
-            inactiveTransition="transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)"
+            padding={350}
+            strength={2.2}
+            activeTransition="transform 0.25s ease-out"
+            inactiveTransition="transform 0.6s ease-in-out"
             className="relative flex justify-center items-center"
           >
-            <div className="relative group max-w-[210px] sm:max-w-[270px] md:max-w-[320px] lg:max-w-[360px]">
+            <div className="relative group max-w-[240px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-[460px]">
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
