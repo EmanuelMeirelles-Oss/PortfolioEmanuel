@@ -59,7 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </FadeIn>
 
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-10 px-2 text-center flex justify-center items-center">
+      <div className="w-full overflow-hidden mt-2 sm:mt-4 z-10 px-2 text-center flex justify-center items-center shrink-0">
         <FadeIn delay={0.15} y={30}>
           <ShimmerText
             interactive
@@ -68,7 +68,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             style={{
               fontFamily: "'Kanit', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(2.75rem, 11vw, 105px)',
+              fontSize: 'clamp(2.5rem, 9.5vw, 95px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
             }}
@@ -79,16 +79,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-20 my-auto pt-2 pb-6 sm:pt-4 sm:pb-8 flex justify-center items-center pointer-events-auto">
+      <div className="relative z-20 flex-1 flex justify-center items-center pt-2 sm:pt-4 pb-4 sm:pb-6 pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
-            padding={450}
-            strength={1.6}
+            padding={550}
+            strength={1.4}
             activeTransition="transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)"
             inactiveTransition="transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)"
             className="relative flex justify-center items-center"
           >
-            <div className="relative group max-w-[240px] sm:max-w-[310px] md:max-w-[370px] lg:max-w-[420px]">
+            <div className="relative group max-w-[210px] sm:max-w-[270px] md:max-w-[320px] lg:max-w-[360px]">
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
