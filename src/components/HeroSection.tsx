@@ -3,7 +3,7 @@ import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
 import emanuelAvatar from '../assets/emanuel_no_bg.webp';
-import WarpText from './WarpText';
+import ShimmerText from '@/components/ui/shimmer-text';
 
 interface HeroSectionProps {
   onOpenContact: () => void;
@@ -58,26 +58,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         </nav>
       </FadeIn>
 
-      {/* Interactive WarpText Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-10 px-2 text-center">
+      {/* Interactive Shimmer Headline: EU CRIO SITES */}
+      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-10 px-2 text-center flex justify-center items-center">
         <FadeIn delay={0.15} y={30}>
-          <WarpText
-            text="EU CRIO SITES"
-            color="#f8f5ff"
-            warpStrength={0.045}
-            warpScale={1.2}
-            speed={0.32}
-            pointerInfluence={0.3}
-            pointerStrength={0.25}
-            refraction={0.008}
-            ripple
-            fontSize={110}
-            fontWeight={800}
-            style={{ height: '180px' }}
-            fontFamily="'Kanit', sans-serif"
-            letterSpacing={-0.06}
-            lineHeight={0.9}
-          />
+          <ShimmerText
+            interactive
+            duration={1.5}
+            className="font-extrabold uppercase tracking-tight text-center leading-none"
+            style={{
+              fontFamily: "'Kanit', sans-serif",
+              fontWeight: 800,
+              fontSize: 'clamp(3rem, 12vw, 110px)',
+              letterSpacing: '-0.04em',
+              lineHeight: 0.9,
+            }}
+          >
+            EU CRIO SITES
+          </ShimmerText>
         </FadeIn>
       </div>
 
