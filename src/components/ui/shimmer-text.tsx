@@ -77,21 +77,18 @@ export function ShimmerText({
     let rafId = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
-        targetPos = Math.min(Math.max(relativeX, -20), 120);
-      } else {
-        targetPos = (e.clientX / window.innerWidth) * 100;
-      }
+      // Map screen cursor X (0% to 100%) to target position
+      const pct = (e.clientX / window.innerWidth) * 100;
+      // Clamp position strictly between 0% and 100% so text background never runs off edge
+      targetPos = Math.min(Math.max(pct, 0), 100);
     };
 
     const update = () => {
-      // Smooth lerp without React re-renders for max performance
+      // Smooth lerp for liquid performance
       currentPos += (targetPos - currentPos) * 0.08;
       if (textRef.current) {
-        const mapped = -80 + (currentPos / 100) * 310;
-        textRef.current.style.backgroundPositionX = `${mapped}%`;
+        const clampedPos = Math.min(Math.max(currentPos, 0), 100);
+        textRef.current.style.backgroundPositionX = `${clampedPos}%`;
       }
       rafId = requestAnimationFrame(update);
     };
@@ -106,7 +103,7 @@ export function ShimmerText({
   }, [interactive]);
 
   return (
-    <div ref={containerRef} className="group overflow-hidden inline-block" style={style}>
+    <div ref={containerRef} className="group overflow-visible inline-block max-w-full" style={style}>
       <div>
         <div
           ref={textRef}
@@ -119,11 +116,11 @@ export function ShimmerText({
             {
               WebkitTextFillColor: "transparent",
               background:
-                "linear-gradient(to right, #808A98 0%, #C4D2DE 28%, #FFFFFF 50%, #C4D2DE 72%, #808A98 100%)",
+                "linear-gradient(90deg, #7A8593 0%, #C4D2DE 30%, #FFFFFF 50%, #C4D2DE 70%, #7A8593 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "70% 200%",
+              backgroundRepeat: "repeat-x",
+              backgroundSize: "200% 100%",
               backgroundPositionX: "50%",
               willChange: "background-position",
             } as React.CSSProperties

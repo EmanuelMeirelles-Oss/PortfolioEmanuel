@@ -59,7 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </FadeIn>
 
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full overflow-hidden mt-4 sm:mt-6 z-30 relative px-2 text-center flex justify-center items-center pointer-events-none">
+      <div className="w-full mt-4 sm:mt-6 z-30 relative px-2 text-center flex justify-center items-center pointer-events-none">
         <FadeIn delay={0.15} y={30} className="w-full">
           <ShimmerText
             interactive
@@ -67,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             style={{
               fontFamily: "'Kanit', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(2.8rem, 13vw, 125px)',
+              fontSize: 'clamp(2.2rem, 11vw, 118px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
               width: '100%',
