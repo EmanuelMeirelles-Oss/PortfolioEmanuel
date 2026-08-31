@@ -9,6 +9,7 @@ import idateImg from '../assets/projects/idate.webp';
 import imeppiImg from '../assets/projects/imeppi.webp';
 import confibanImg from '../assets/projects/confiban.webp';
 import zonamistaImg from '../assets/projects/zonamista.webp';
+import flokiImg from '../assets/projects/floki.webp';
 
 interface ProjectsSectionProps {
   onOpenContact: () => void;
@@ -25,6 +26,16 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: 'Floki Petshop — E-Commerce & Pet Care',
+    category: 'E-Commerce & Pet Shop',
+    description:
+      'Plataforma completa de e-commerce para pet shop com catálogo interativo para cães e gatos, carrinho de compras, ofertas exclusivas e programa de fidelidade (Clube Floki).',
+    image: flokiImg,
+    tags: ['Next.js', 'Tailwind CSS', 'E-Commerce', 'TypeScript', 'Design Acolhedor'],
+    liveUrl: 'https://floki-petshop.vercel.app/',
+    highlights: ['Catálogo Dinâmico Cães & Gatos', 'Carrinho de Compras & Clube Floki', '100% Responsivo e Otimizado'],
+  },
   {
     title: 'Dra. Yamile Yunes — Psicologia Infantil',
     category: 'Site Institucional & Saúde',

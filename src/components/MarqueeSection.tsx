@@ -4,9 +4,16 @@ import idateImg from '../assets/projects/idate.webp';
 import imeppiImg from '../assets/projects/imeppi.webp';
 import confibanImg from '../assets/projects/confiban.webp';
 import zonamistaImg from '../assets/projects/zonamista.webp';
+import flokiImg from '../assets/projects/floki.webp';
 import { ExternalLink, ChevronLeft, ChevronRight, MoveRight } from 'lucide-react';
 
 const realProjects = [
+  {
+    title: 'Floki Petshop — E-Commerce Pet',
+    category: 'E-Commerce & Pet Care',
+    image: flokiImg,
+    url: 'https://floki-petshop.vercel.app/',
+  },
   {
     title: 'Dra. Yamile Yunes — Psicologia',
     category: 'Saúde & Psicologia',
