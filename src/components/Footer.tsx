@@ -17,9 +17,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const whatsappNumber = '5548999999999';
+  const whatsappNumber = '554888722967';
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Olá Emanuel! Vi seu portfólio e gostaria de um orçamento.'
+    'Olá Emanuel! Vi seu portfólio e gostaria de solicitar um orçamento.'
   )}`;
 
   return (
@@ -38,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             </FadeIn>
 
             <FadeIn delay={0.1} y={20}>
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="https://www.linkedin.com/in/emanuel-yunes-de-meirelles-83779b281/"
                   target="_blank"
@@ -59,10 +59,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-emerald-600/20 hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
+                  className="px-4 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-400 text-emerald-400 transition-all duration-300 flex items-center gap-2 text-xs font-semibold"
                   aria-label="WhatsApp"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-4 h-4 fill-current" />
+                  <span>(48) 8872-2967</span>
                 </a>
               </div>
             </FadeIn>

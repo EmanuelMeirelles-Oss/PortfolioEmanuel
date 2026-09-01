@@ -15,8 +15,8 @@ export const ContactButton: React.FC<ContactButtonProps> = ({
     if (onClick) {
       onClick();
     } else {
-      const phone = '5548999999999';
-      const message = encodeURIComponent('Olá Emanuel! Vi seu portfólio e gostaria de um orçamento para um site.');
+      const phone = '554888722967';
+      const message = encodeURIComponent('Olá Emanuel! Vi seu portfólio e gostaria de solicitar um orçamento para um site.');
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
     }
   };

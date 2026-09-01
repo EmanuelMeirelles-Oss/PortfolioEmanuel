@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageCircle, Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { X, MessageCircle, Mail, ArrowRight, CheckCircle2, Phone } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -14,9 +14,10 @@ const LinkedinIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' 
 );
 
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
-  const whatsappNumber = '5548999999999';
+  const whatsappNumber = '554888722967';
+  const displayPhone = '(48) 8872-2967';
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Olá Emanuel! Gostaria de conversar sobre a criação de um site para o meu negócio.'
+    'Olá Emanuel! Vi seu portfólio e gostaria de conversar sobre um projeto de site.'
   )}`;
 
   return (
@@ -69,11 +70,14 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     <MessageCircle className="w-6 h-6 fill-current" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-white group-hover:text-emerald-400 transition-colors">
-                      WhatsApp Direto
+                    <h3 className="font-bold text-white group-hover:text-emerald-400 transition-colors flex items-center gap-2">
+                      WhatsApp / Telefone
                     </h3>
-                    <p className="text-xs text-[#D7E2EA]/70">
-                      Resposta rápida em poucos minutos
+                    <p className="text-xs font-semibold text-emerald-400 mt-0.5">
+                      {displayPhone}
+                    </p>
+                    <p className="text-[11px] text-[#D7E2EA]/60">
+                      Clique para enviar mensagem direta
                     </p>
                   </div>
                 </div>
