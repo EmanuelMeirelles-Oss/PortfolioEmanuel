@@ -9,38 +9,38 @@ import { ExternalLink, ChevronLeft, ChevronRight, MoveRight } from 'lucide-react
 
 const realProjects = [
   {
-    title: 'Floki Petshop — E-Commerce Pet',
-    category: 'E-Commerce & Pet Care',
-    image: flokiImg,
-    url: 'https://floki-petshop.vercel.app/',
-  },
-  {
-    title: 'Dra. Yamile Yunes — Psicologia',
-    category: 'Saúde & Psicologia',
+    title: 'Dra. Yamile Yunes',
+    category: 'Psicologia infantil',
     image: yamileImg,
     url: 'https://site-yamile.vercel.app/index.html',
   },
   {
-    title: 'IDATE — Água, Terra & Energia',
-    category: 'Plataforma Institucional',
-    image: idateImg,
-    url: 'https://idate-novo.vercel.app/',
-  },
-  {
-    title: 'IMEPPI — Propriedade Intelectual',
-    category: 'Segurança Jurídica',
+    title: 'IMEPPI',
+    category: 'Propriedade intelectual',
     image: imeppiImg,
     url: 'https://imeppi.org/',
   },
   {
-    title: 'CONFIBAN — Proteção Bancária',
-    category: 'Fintech & Proteção',
+    title: 'IDATE',
+    category: 'Água, terra e energia',
+    image: idateImg,
+    url: 'https://idate-novo.vercel.app/',
+  },
+  {
+    title: 'Confiban',
+    category: 'Em lançamento · Proteção bancária',
     image: confibanImg,
     url: 'https://www.confiban.com.br/',
   },
   {
-    title: 'Zona Mista — Portal Esportivo',
-    category: 'Web App & Entretenimento',
+    title: 'Floki Petshop',
+    category: 'Projeto modelo · Loja virtual',
+    image: flokiImg,
+    url: 'https://floki-petshop.vercel.app/',
+  },
+  {
+    title: 'Zona Mista',
+    category: 'Projeto próprio · Futebol',
     image: zonamistaImg,
     url: 'https://aplicativo-noticias-futebol.vercel.app/',
   },
@@ -98,15 +98,15 @@ export const MarqueeSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#0C0C0C] pt-16 sm:pt-24 pb-12 overflow-hidden border-y border-white/5"
+      className="w-full bg-[#0C0C0C] pt-8 sm:pt-16 pb-8 sm:pb-12 overflow-hidden border-y border-white/5"
     >
-      <div className="max-w-6xl mx-auto px-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 select-none">
+      <div className="max-w-6xl mx-auto px-6 mb-5 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 select-none">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-[#D7E2EA]/60">
-            Trabalhos Reais
+            Trabalhos
           </span>
           <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight mt-1">
-            Projetos Desenvolvidos Por Mim
+            Sites que eu fiz
           </h3>
         </div>
 

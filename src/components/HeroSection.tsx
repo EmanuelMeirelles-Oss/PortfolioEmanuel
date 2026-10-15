@@ -4,12 +4,15 @@ import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
 import emanuelAvatar from '../assets/emanuel_no_bg.webp';
 import ShimmerText from '@/components/ui/shimmer-text';
+import { getLeadName } from '../lib/contact';
 
 interface HeroSectionProps {
   onOpenContact: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
+  const leadName = getLeadName();
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -18,7 +21,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
   };
 
   return (
-    <section className="relative min-h-screen min-h-dvh w-full flex flex-col justify-between overflow-hidden bg-[#0C0C0C] select-none pt-4 pb-8 md:pb-12">
+    <section className="relative md:min-h-screen md:min-h-dvh w-full flex flex-col justify-between overflow-hidden bg-[#0C0C0C] select-none pt-2 md:pt-4 pb-8 md:pb-12">
       {/* Navbar */}
       <FadeIn delay={0} y={-20} className="w-full z-30 relative">
         <nav className="w-full flex items-center justify-between gap-2 px-4 sm:px-6 md:px-12 pt-4 md:pt-6 text-[#D7E2EA] font-semibold uppercase tracking-normal sm:tracking-wider text-[10px] sm:text-sm md:text-base lg:text-lg">
@@ -58,8 +61,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
         </nav>
       </FadeIn>
 
+      {/* Saudação do link personalizado (?para=Nome) */}
+      {leadName && (
+        <FadeIn delay={0.1} y={10} className="w-full flex justify-center mt-5 sm:mt-6 px-4 z-30 relative">
+          <span className="inline-flex items-center gap-2 max-w-full px-4 py-1.5 rounded-full bg-white/5 border border-white/15 text-xs sm:text-sm text-[#D7E2EA]">
+            <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-emerald-400" />
+            <span className="truncate">Olá, {leadName}</span>
+          </span>
+        </FadeIn>
+      )}
+
       {/* Interactive Shimmer Headline: EU CRIO SITES */}
-      <div className="w-full mt-4 sm:mt-6 z-30 relative px-2 text-center flex justify-center items-center pointer-events-none">
+      <div className={`w-full ${leadName ? 'mt-3 sm:mt-4' : 'mt-5 sm:mt-6'} z-30 relative px-2 text-center flex justify-center items-center pointer-events-none`}>
         <FadeIn delay={0.15} y={30} className="w-full">
           <ShimmerText
             interactive
@@ -79,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Character Avatar */}
-      <div className="relative z-10 my-auto pt-4 sm:pt-6 pb-2 flex justify-center items-center pointer-events-auto">
+      <div className="relative z-10 md:my-auto pt-3 sm:pt-6 pb-4 sm:pb-2 flex justify-center items-center pointer-events-auto">
         <FadeIn delay={0.3} y={20}>
           <Magnet
             padding={200}
@@ -88,7 +101,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
             inactiveTransition="transform 0.5s ease-out"
             className="relative flex justify-center items-center"
           >
-            <div className="relative group max-w-[220px] sm:max-w-[290px] md:max-w-[360px] lg:max-w-[420px]">
+            <div className="relative group max-w-[240px] sm:max-w-[290px] md:max-w-[360px] lg:max-w-[420px]">
               <img
                 src={emanuelAvatar}
                 alt="Emanuel Meirelles - Desenvolvedor Web"
@@ -104,10 +117,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Subtitle & CTA */}
-      <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-end gap-6 px-6 md:px-12 z-30">
+      <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-end gap-5 px-6 md:px-12 z-30">
         <FadeIn delay={0.45} y={20} className="max-w-md text-center sm:text-left">
           <p className="text-[#D7E2EA]/90 font-light uppercase tracking-wider text-xs sm:text-sm md:text-base leading-relaxed">
-            desenvolvedor web criando sites institucionais e landing pages de alta conversão para o seu negócio
+            Sites institucionais e landing pages para negócios que querem receber mais clientes pela internet
           </p>
         </FadeIn>
 

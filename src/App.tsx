@@ -4,14 +4,23 @@ import { MarqueeSection } from './components/MarqueeSection';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { ProcessSection } from './components/ProcessSection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
 import ClickSpark from './components/ClickSpark';
+import { WhatsAppFloat } from './components/WhatsAppFloat';
+import { Analytics } from '@vercel/analytics/react';
+import { getWhatsappUrl, isMobileViewport } from './lib/contact';
 
 function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  // No celular o lead quer o WhatsApp, não um modal com três opções.
   const handleOpenContact = () => {
+    if (isMobileViewport()) {
+      window.open(getWhatsappUrl(), '_blank', 'noopener,noreferrer');
+      return;
+    }
     setIsContactOpen(true);
   };
 
@@ -43,11 +52,17 @@ function App() {
         {/* Projects Section */}
         <ProjectsSection onOpenContact={handleOpenContact} />
 
+        {/* How it works */}
+        <ProcessSection onOpenContact={handleOpenContact} />
+
         {/* Footer Section */}
         <Footer onOpenContact={handleOpenContact} />
 
         {/* Contact Modal Dialog */}
         <ContactModal isOpen={isContactOpen} onClose={handleCloseContact} />
+
+        <WhatsAppFloat />
+        <Analytics />
       </div>
     </ClickSpark>
   );

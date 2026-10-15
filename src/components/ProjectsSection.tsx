@@ -1,8 +1,7 @@
 import React from 'react';
 import { FadeIn } from './FadeIn';
 import { LiveProjectButton } from './LiveProjectButton';
-import { ContactButton } from './ContactButton';
-import { ExternalLink, Layers, CheckCircle } from 'lucide-react';
+import { ExternalLink, Layers, CheckCircle, Quote } from 'lucide-react';
 
 import yamileImg from '../assets/projects/yamile.webp';
 import idateImg from '../assets/projects/idate.webp';
@@ -12,94 +11,115 @@ import zonamistaImg from '../assets/projects/zonamista.webp';
 import flokiImg from '../assets/projects/floki.webp';
 
 interface ProjectsSectionProps {
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
+}
+
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
 }
 
 interface Project {
   title: string;
   category: string;
+  // 'cliente' = site entregue a um cliente; os outros tipos levam selo
+  kind: 'cliente' | 'lancamento' | 'modelo' | 'autoral';
   description: string;
   image: string;
-  tags: string[];
   liveUrl: string;
   highlights: string[];
+  testimonial?: Testimonial;
 }
+
+const kindBadge: Record<Project['kind'], string | null> = {
+  cliente: null,
+  lancamento: 'Em lançamento',
+  modelo: 'Projeto modelo',
+  autoral: 'Projeto próprio',
+};
 
 const projects: Project[] = [
   {
-    title: 'Floki Petshop — E-Commerce & Pet Care',
-    category: 'E-Commerce & Pet Shop',
+    title: 'Dra. Yamile Yunes',
+    category: 'Psicologia infantil',
+    kind: 'cliente',
     description:
-      'Plataforma completa de e-commerce para pet shop com catálogo interativo para cães e gatos, carrinho de compras, ofertas exclusivas e programa de fidelidade (Clube Floki).',
-    image: flokiImg,
-    tags: ['Next.js', 'Tailwind CSS', 'E-Commerce', 'TypeScript', 'Design Acolhedor'],
-    liveUrl: 'https://floki-petshop.vercel.app/',
-    highlights: ['Catálogo Dinâmico Cães & Gatos', 'Carrinho de Compras & Clube Floki', '100% Responsivo e Otimizado'],
-  },
-  {
-    title: 'Dra. Yamile Yunes — Psicologia Infantil',
-    category: 'Site Institucional & Saúde',
-    description:
-      'Site profissional de alta conversão para atendimento psicológico infantil e juvenil em Florianópolis. Desenvolvido com agendamento direto via WhatsApp, estrutura bilíngue (Português/Espanhol), seção de dúvidas frequentes para os pais e integração com Google Maps.',
+      'Site de uma psicóloga infantil e juvenil em Florianópolis. Os pais marcam a consulta pelo WhatsApp com um clique, leem as respostas para as dúvidas mais comuns e acham o consultório no mapa. Tem versão em português e em espanhol.',
     image: yamileImg,
-    tags: ['React', 'Agendamento WhatsApp', 'SEO Bilíngue (PT/ES)', 'Design Acolhedor'],
     liveUrl: 'https://site-yamile.vercel.app/index.html',
-    highlights: ['Agendamento Direto em 1 Clique', 'Estrutura Bilíngue (PT/ES)', '100% Responsivo e Otimizado'],
+    highlights: ['Agendamento pelo WhatsApp em 1 clique', 'Site em português e espanhol', 'Dúvidas dos pais respondidas no site'],
+    testimonial: {
+      quote:
+        'O site foi a porta de entrada para eu começar a receber pacientes. Hoje muitos dos pais que me procuram chegaram por ele.',
+      author: 'Dra. Yamile Yunes',
+      role: 'Psicóloga infantil em Florianópolis',
+    },
   },
   {
-    title: 'IDATE — Direitos da Água, Terra & Energia',
-    category: 'Plataforma Institucional & Regulação',
+    title: 'IMEPPI',
+    category: 'Propriedade intelectual',
+    kind: 'cliente',
     description:
-      'Plataforma institucional para associação civil sem fins econômicos dedicada a pesquisas de regulamentação técnica. Inclui radar de evidências ao vivo, 8 observatórios temáticos e central de denúncias.',
-    image: idateImg,
-    tags: ['Next.js', 'Tailwind CSS', 'Radar de Evidências', 'Design Corporativo'],
-    liveUrl: 'https://idate-novo.vercel.app/',
-    highlights: ['8 Observatórios Temáticos', 'Radar de Evidências em Tempo Real', 'Alta Densidade Informacional'],
-  },
-  {
-    title: 'IMEPPI — Proteção de Propriedade Intelectual',
-    category: 'Segurança Jurídica & Portal Institucional',
-    description:
-      'Portal institucional criado para o Instituto Meirelles, focado no combate à pirataria digital, defesa de marcas registradas, proteção de direitos autorais e monitoramento contínuo de concorrência desleal.',
+      'Site do Instituto Meirelles, que combate a pirataria digital e defende marcas registradas, direitos autorais e empresas prejudicadas por concorrência desleal.',
     image: imeppiImg,
-    tags: ['React', 'Tailwind CSS', 'Segurança Digital', 'Framer Motion'],
     liveUrl: 'https://imeppi.org/',
-    highlights: ['Defesa de Marcas & Direitos Autorais', 'Combate à Pirataria Digital', 'Posicionamento Institucional de Autoridade'],
+    highlights: ['Defesa de marcas e direitos autorais', 'Combate à pirataria digital', 'Visual sóbrio de instituição'],
   },
   {
-    title: 'CONFIBAN — Proteção do Sistema Bancário',
-    category: 'Fintech & Proteção Financeira',
+    title: 'IDATE',
+    category: 'Água, terra e energia',
+    kind: 'cliente',
     description:
-      'Portal de orientação técnica para vítimas de fraudes financeiras e proteção do consumidor bancário. Desenvolvido para atuar como ponte de confiança entre os cidadãos e as instituições financeiras.',
+      'Plataforma de uma associação sem fins econômicos que pesquisa a regulação técnica de água, terra e energia. Reúne 8 observatórios temáticos, um radar que mostra as evidências conforme chegam e um canal de denúncias.',
+    image: idateImg,
+    liveUrl: 'https://idate-novo.vercel.app/',
+    highlights: ['8 observatórios temáticos', 'Radar de evidências ao vivo', 'Canal de denúncias'],
+  },
+  {
+    title: 'Confiban',
+    category: 'Proteção bancária',
+    kind: 'lancamento',
+    description:
+      'Site de um projeto que vai orientar de graça vítimas de fraude financeira e consumidores com problemas no banco. O visual foi pensado para passar credibilidade a quem chega desconfiado.',
     image: confibanImg,
-    tags: ['React', 'Design Bancário', 'Segurança Financeira', 'TypeScript'],
     liveUrl: 'https://www.confiban.com.br/',
-    highlights: ['Orientação Gratuita contra Fraudes', 'Interface de Alta Credibilidade', 'Atendimento Direto'],
+    highlights: ['Orientação gratuita contra fraudes', 'Visual que passa credibilidade', 'Site no ar com domínio próprio'],
   },
   {
-    title: 'Zona Mista — Portal de Notícias Esportivas',
-    category: 'Web App & Entretenimento Esportivo',
+    title: 'Floki Petshop',
+    category: 'Loja virtual',
+    kind: 'modelo',
     description:
-      'Portal de notícias e curadoria esportiva sem ruído. Inclui minigame interativo de "Chute a Gol" (pênaltis), ticker de placares mundiais ao vivo e seletor de temas visuais (Verde Neon, Ciber Roxo e Retrô).',
+      'Modelo que criei para pet shops que vendem online: catálogo separado para cães e gatos, carrinho, ofertas e um clube de fidelidade. Serve de base para outras lojas e para serviços como banho e tosa.',
+    image: flokiImg,
+    liveUrl: 'https://floki-petshop.vercel.app/',
+    highlights: ['Catálogo de cães e gatos', 'Carrinho e clube de fidelidade', 'Base adaptável a outros negócios'],
+  },
+  {
+    title: 'Zona Mista',
+    category: 'Portal de futebol',
+    kind: 'autoral',
+    description:
+      'Portal de notícias de futebol que fiz por conta própria. Tem placares do mundo todo atualizados ao vivo, um minigame de pênaltis e três temas visuais para escolher.',
     image: zonamistaImg,
-    tags: ['JavaScript ES6+', 'Minigame Interativo', 'API de Placares', 'Dark Mode Customizável'],
     liveUrl: 'https://aplicativo-noticias-futebol.vercel.app/',
-    highlights: ['Jogo Interativo de Pênaltis', 'Ticker de Placares em Tempo Real', 'Temas Customizáveis (Neon/Cyber)'],
+    highlights: ['Placares ao vivo', 'Minigame de pênaltis', 'Três temas visuais'],
   },
 ];
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact }) => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
   return (
     <section
       id="projects"
-      className="relative min-h-screen min-h-dvh w-full bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 py-24 sm:py-32 px-5 sm:px-8 md:px-12 flex flex-col justify-center items-center overflow-hidden z-30"
+      className="relative w-full bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 pt-14 pb-10 sm:pt-24 sm:pb-16 px-4 sm:px-8 md:px-12 flex flex-col items-center overflow-hidden z-30"
     >
       <div className="relative z-10 max-w-6xl w-full mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 sm:mb-24">
+        <div className="text-center mb-8 sm:mb-14">
           <FadeIn delay={0} y={30}>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm font-semibold uppercase tracking-widest text-[#D7E2EA] mb-4">
-              <Layers className="w-4 h-4 text-emerald-400" /> Portfólio Real
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm font-semibold uppercase tracking-widest text-[#D7E2EA] mb-3">
+              <Layers className="w-4 h-4 text-emerald-400" /> Portfólio
             </span>
           </FadeIn>
 
@@ -113,14 +133,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
           </FadeIn>
 
           <FadeIn delay={0.2} y={30}>
-            <p className="mt-4 text-[#D7E2EA]/70 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              Confira os sites e plataformas reais desenvolvidos por Emanuel Meirelles.
+            <p className="mt-3 text-[#D7E2EA]/70 text-sm sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+              Sites que fiz para clientes e modelos que criei para mostrar o que dá para fazer.
             </p>
           </FadeIn>
         </div>
 
         {/* Projects List */}
-        <div className="space-y-16 sm:space-y-24">
+        <div className="space-y-5 sm:space-y-10 lg:space-y-16">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
             return (
@@ -128,24 +148,24 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
                 <div
                   className={`flex flex-col ${
                     isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                  } gap-8 sm:gap-12 items-center bg-[#12141A]/90 border border-white/10 p-6 sm:p-10 rounded-3xl shadow-2xl hover:border-white/25 transition-all duration-300`}
+                  } gap-4 sm:gap-8 lg:gap-12 items-center bg-[#12141A]/90 border border-white/10 p-3.5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl hover:border-white/25 transition-all duration-300`}
                 >
                   {/* Browser Mockup Window */}
-                  <div className="w-full lg:w-1/2 group relative rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 shadow-2xl">
+                  <div className="w-full lg:w-1/2 group relative rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 shadow-2xl">
                     {/* Browser Toolbar */}
-                    <div className="w-full bg-[#181B22] px-4 py-2.5 flex items-center justify-between border-b border-white/10 text-xs text-[#D7E2EA]/60">
+                    <div className="w-full bg-[#181B22] px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between border-b border-white/10 text-xs text-[#D7E2EA]/60">
                       <div className="flex items-center gap-1.5">
-                        <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                        <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                        <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                        <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/80" />
+                        <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80" />
+                        <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80" />
                       </div>
-                      <span className="font-mono text-xs truncate max-w-[240px] text-[#D7E2EA]/50">
+                      <span className="font-mono text-[11px] sm:text-xs truncate max-w-[200px] sm:max-w-[240px] text-[#D7E2EA]/50">
                         {project.liveUrl.replace('https://', '')}
                       </span>
                       <ExternalLink className="w-4 h-4 text-[#D7E2EA]/40 group-hover:text-white transition-colors" />
                     </div>
 
-                    <div className="relative w-full h-[260px] sm:h-[320px] md:h-[380px] overflow-hidden bg-black">
+                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-black">
                       <img
                         src={project.image}
                         alt={project.title}
@@ -161,8 +181,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="absolute top-4 right-4 p-3 rounded-full bg-black/80 backdrop-blur-md text-white border border-white/20 hover:scale-110 transition-transform shadow-xl"
-                        title="Abrir Projeto no Ar"
+                        className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 rounded-full bg-black/80 backdrop-blur-md text-white border border-white/20 hover:scale-110 transition-transform shadow-xl"
+                        title="Abrir o site"
                       >
                         <ExternalLink className="w-5 h-5" />
                       </a>
@@ -170,21 +190,28 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
                   </div>
 
                   {/* Details */}
-                  <div className="w-full lg:w-1/2 flex flex-col justify-between space-y-6">
+                  <div className="w-full lg:w-1/2 flex flex-col justify-between space-y-3.5 sm:space-y-5 px-1 sm:px-0 pb-1 sm:pb-0">
                     <div>
-                      <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-md">
-                        {project.category}
-                      </span>
-                      <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-3 tracking-tight">
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span className="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 sm:px-3 py-1 rounded-md">
+                          {project.category}
+                        </span>
+                        {kindBadge[project.kind] && (
+                          <span className="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-300 bg-amber-400/10 border border-amber-400/25 px-2.5 sm:px-3 py-1 rounded-md">
+                            {kindBadge[project.kind]}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-xl sm:text-3xl font-extrabold text-white mt-2.5 sm:mt-3 tracking-tight leading-tight">
                         {project.title}
                       </h3>
-                      <p className="text-[#D7E2EA]/70 text-sm sm:text-base leading-relaxed mt-3 font-light">
+                      <p className="text-[#D7E2EA]/70 text-sm sm:text-base leading-relaxed mt-2 sm:mt-3 font-light">
                         {project.description}
                       </p>
                     </div>
 
                     {/* Highlights */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {project.highlights.map((highlight) => (
                         <div key={highlight} className="flex items-center gap-2 text-xs sm:text-sm text-[#D7E2EA]">
                           <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -193,21 +220,24 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
                       ))}
                     </div>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-[#D7E2EA]/80 font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {/* Depoimento */}
+                    {project.testimonial && (
+                      <figure className="relative rounded-xl bg-white/[0.04] border border-white/10 p-4 sm:p-5">
+                        <Quote className="absolute top-3 right-3 w-5 h-5 text-emerald-400/40" />
+                        <blockquote className="text-sm sm:text-base text-white leading-relaxed pr-6">
+                          "{project.testimonial.quote}"
+                        </blockquote>
+                        <figcaption className="mt-2.5 text-xs text-[#D7E2EA]/60">
+                          <span className="font-semibold text-[#D7E2EA]">{project.testimonial.author}</span>
+                          {' · '}
+                          {project.testimonial.role}
+                        </figcaption>
+                      </figure>
+                    )}
 
                     {/* Action Button */}
-                    <div className="pt-4 flex items-center gap-4">
-                      <LiveProjectButton url={project.liveUrl} label="Acessar Site no Ar" />
+                    <div className="pt-1 sm:pt-2 flex items-center gap-4">
+                      <LiveProjectButton url={project.liveUrl} label={project.kind === 'modelo' ? 'Ver o modelo' : 'Abrir o site'} />
                     </div>
                   </div>
                 </div>
@@ -215,21 +245,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenContact 
             );
           })}
         </div>
-
-        {/* Bottom Banner */}
-        <FadeIn delay={0.3} y={30} className="mt-20 sm:mt-28 text-center">
-          <div className="p-8 sm:p-12 rounded-3xl bg-[#12141A] border border-white/10 shadow-2xl relative overflow-hidden">
-            <h3 className="text-2xl sm:text-4xl font-extrabold text-white uppercase tracking-tight">
-              Quer um site de alto nível como esses?
-            </h3>
-            <p className="text-[#D7E2EA]/70 max-w-xl mx-auto mt-3 text-sm sm:text-base font-light">
-              Sua empresa também pode ter uma presença digital extraordinária que transmite autoridade e converte visitantes em clientes.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <ContactButton label="Construir Meu Site" onClick={onOpenContact} />
-            </div>
-          </div>
-        </FadeIn>
       </div>
     </section>
   );

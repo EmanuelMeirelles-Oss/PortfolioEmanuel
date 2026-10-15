@@ -1,6 +1,7 @@
 import React from 'react';
 import { FadeIn } from './FadeIn';
-import { ArrowUp, Mail, MessageCircle, Heart } from 'lucide-react';
+import { ArrowUp, Mail, MessageCircle } from 'lucide-react';
+import { DISPLAY_PHONE, getWhatsappUrl } from '../lib/contact';
 
 interface FooterProps {
   onOpenContact: () => void;
@@ -17,15 +18,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const whatsappNumber = '554888722967';
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Olá Emanuel! Vi seu portfólio e gostaria de solicitar um orçamento.'
-  )}`;
+  const whatsappUrl = getWhatsappUrl();
 
   return (
-    <footer className="relative w-full bg-[#080808] text-[#D7E2EA] pt-20 pb-10 border-t border-white/10 overflow-hidden">
+    <footer className="relative w-full bg-[#080808] text-[#D7E2EA] pt-12 sm:pt-16 pb-8 sm:pb-10 border-t border-white/10 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 pb-10 md:pb-14 border-b border-white/10">
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <FadeIn delay={0} y={20}>
@@ -33,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                 Emanuel Meirelles
               </h3>
               <p className="text-[#D7E2EA]/70 text-sm sm:text-base font-light max-w-sm leading-relaxed mt-2">
-                Desenvolvedor Web focado em criar experiências digitais marcantes, sites institucionais e landing pages de alta performance.
+                Sites institucionais, landing pages e sistemas web para negócios de Florianópolis e de todo o Brasil.
               </p>
             </FadeIn>
 
@@ -63,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                   aria-label="WhatsApp"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
-                  <span>(48) 8872-2967</span>
+                  <span>{DISPLAY_PHONE}</span>
                 </a>
               </div>
             </FadeIn>
@@ -83,12 +81,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                 </li>
                 <li>
                   <a href="#services" className="hover:text-white transition-colors">
-                    Serviços & Soluções
+                    Serviços
                   </a>
                 </li>
                 <li>
                   <a href="#projects" className="hover:text-white transition-colors">
-                    Projetos em Destaque
+                    Projetos
+                  </a>
+                </li>
+                <li>
+                  <a href="#process" className="hover:text-white transition-colors">
+                    Como funciona
                   </a>
                 </li>
                 <li>
@@ -120,10 +123,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
         </div>
 
         {/* Bottom copyright bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D7E2EA]/50 font-light">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D7E2EA]/50 font-light">
           <p className="flex items-center gap-1">
-            © {new Date().getFullYear()} Emanuel Meirelles. Desenvolvido com{' '}
-            <Heart className="w-3.5 h-3.5 text-purple-500 fill-purple-500 inline" /> e React 19.
+            © {new Date().getFullYear()} Emanuel Meirelles. Florianópolis, SC.
           </p>
 
           <button

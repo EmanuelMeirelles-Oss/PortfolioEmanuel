@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageCircle, Mail, ArrowRight, CheckCircle2, Phone } from 'lucide-react';
+import { X, MessageCircle, Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { DISPLAY_PHONE, getWhatsappUrl } from '../lib/contact';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -14,11 +15,8 @@ const LinkedinIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' 
 );
 
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
-  const whatsappNumber = '554888722967';
-  const displayPhone = '(48) 8872-2967';
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Olá Emanuel! Vi seu portfólio e gostaria de conversar sobre um projeto de site.'
-  )}`;
+  const displayPhone = DISPLAY_PHONE;
+  const whatsappUrl = getWhatsappUrl();
 
   return (
     <AnimatePresence>
