@@ -9,7 +9,7 @@ interface AboutSectionProps {
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => {
   const aboutBioText =
-    "Sou o Emanuel, de Florianópolis, e estudo Administração na UFSC. Faço sites institucionais, landing pages e sistemas para negócios que querem ser encontrados na internet e receber contato de clientes. Antes de desenhar qualquer tela, procuro entender quem é o seu cliente e o que ele precisa ver para decidir te chamar.";
+    "Sou o Emanuel, de Florianópolis. Estudo Administração na UFSC e Análise e Desenvolvimento de Sistemas no UniSENAI. Faço sites institucionais, landing pages e sistemas para negócios que querem ser encontrados na internet e receber contato de clientes. Antes de desenhar qualquer tela, procuro entender quem é o seu cliente e o que ele precisa ver para decidir te chamar.";
 
   return (
     <section
